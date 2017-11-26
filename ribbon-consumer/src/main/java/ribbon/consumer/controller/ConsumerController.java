@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import ribbon.consumer.model.User;
 import ribbon.consumer.service.HelloService;
 
 /**
@@ -21,5 +22,21 @@ public class ConsumerController {
     public String helloConsumer() {
 
         return helloService.helloService();
+    }
+
+    @RequestMapping("hello2")
+    public String hello2() {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(helloService.hello1("小胡子"));
+        sb.append(helloService.hello("小胡子", 24));
+        sb.append(helloService.hello(new User() {
+            {
+                setName("小胡子");
+                setAge(24);
+            }
+        }));
+
+        return sb.toString();
     }
 }
